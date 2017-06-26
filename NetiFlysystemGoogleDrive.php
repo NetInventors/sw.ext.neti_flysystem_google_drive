@@ -78,6 +78,9 @@ class NetiFlysystemGoogleDrive extends Plugin
         }
     }
 
+    /**
+     * @return string
+     */
     private function getComposerAutoloader()
     {
         return $this->getPath() . '/vendor/autoload.php';
