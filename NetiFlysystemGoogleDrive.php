@@ -80,6 +80,6 @@ class NetiFlysystemGoogleDrive extends Plugin
 
     private function getComposerAutoloader()
     {
-        return $this->getPath() . '/vendor/autoload.php';;
+        return $this->getPath() . '/vendor/autoload.php';
     }
 }
