@@ -6,7 +6,6 @@
  */
 
 namespace NetiFlysystemGoogleDrive;
-require __DIR__ . '/vendor/autoload.php';
 
 use Shopware\Components\Plugin;
 use Shopware\Components\Plugin\Context\ActivateContext;
