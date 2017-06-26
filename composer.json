@@ -1,0 +1,26 @@
+{
+  "name": "netinventors/sw.ext.neti_flysystem_google_drive.git",
+  "keywords": [
+    "shopware",
+    "google",
+    "drive"
+  ],
+  "replace": {
+    "league/flysystem": "~1.0",
+    "guzzlehttp/guzzle": "~5.3.1"
+  },
+  "config": {
+    "optimize-autoloader": true
+  },
+  "archive": {
+    "exclude": [
+      "/netinventors-sw.ext.neti_flysystem_google_drive-*.*",
+      "/.git",
+      "/.gitignore",
+      "!/vendor"
+    ]
+  },
+  "require": {
+    "nao-pon/flysystem-google-drive": "~1.1"
+  }
+}
