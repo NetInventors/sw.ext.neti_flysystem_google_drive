@@ -27,10 +27,6 @@ class NetiFlysystemGoogleDrive extends Plugin
     public function build(ContainerBuilder $container)
     {
         $pathToComposerAutoloader = $this->getComposerAutoloader();
-        $container->setParameter(
-            $this->getContainerPrefix() . '.composer_autoloader_path',
-            $pathToComposerAutoloader
-        );
         parent::build($container);
 
         if (is_file($pathToComposerAutoloader)) {
