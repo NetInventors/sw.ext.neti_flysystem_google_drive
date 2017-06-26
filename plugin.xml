@@ -2,8 +2,8 @@
 <plugin xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/shopware/shopware/5.2/engine/Shopware/Components/Plugin/schema/plugin.xsd">
 
-    <label lang="de">Media Adapter: GoogleDrive</label>
-    <label lang="en">Media adapter: GoogleDrive</label>
+    <label lang="de">Neti Flysystem GoogleDrive</label>
+    <label lang="en">Neti Flysystem GoogleDrive</label>
 
     <version>1.0.0</version>
     <link>http://www.shopinventors.de</link>
