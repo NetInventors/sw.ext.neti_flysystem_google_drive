@@ -7,7 +7,10 @@
 
 namespace NetiFlysystemGoogleDrive\Service\ImportExport;
 
+use Google_Service_Drive;
 use Hypweb\Flysystem\GoogleDrive\GoogleDriveAdapter;
+use League\Flysystem\Filesystem;
+use NetiFlysystemGoogleDrive\Struct\AdapterConfig;
 use NetiImportExport\Models\Profiles;
 use NetiImportExport\Models\Storage;
 use NetiImportExport\Service\Collections\CollectionInterface;
@@ -34,7 +37,7 @@ class StorageAdapter implements StorageAdapterInterface
     protected $storageAdapterHelper;
 
     /**
-     * @var array
+     * @var AdapterConfig
      */
     protected $configData;
 
@@ -42,6 +45,26 @@ class StorageAdapter implements StorageAdapterInterface
      * @var bool
      */
     protected $initalized = false;
+
+    /**
+     * @var \Google_Client
+     */
+    protected $googleClient;
+
+    /**
+     * @var \Google_Service_Drive
+     */
+    protected $googleServiceDrive;
+
+    /**
+     * @var GoogleDriveAdapter
+     */
+    protected $googleDriveAdapter;
+
+    /**
+     * @var Filesystem
+     */
+    protected $storage;
 
     /**
      * StorageAdapter constructor.
@@ -96,7 +119,7 @@ class StorageAdapter implements StorageAdapterInterface
      */
     public function setConfigData(array $configData)
     {
-        $this->configData = $configData;
+        $this->configData = new AdapterConfig($configData);
 
         return $this;
     }
@@ -254,7 +277,10 @@ class StorageAdapter implements StorageAdapterInterface
     public function listContents($directory = '', $recursive = false)
     {
         $this->initialize();
-        GoogleDriveAdapter::class;
+        //var_dump('initialize');exit;
+        //$list = $this->storage->listContents($directory, $recursive);
+        //var_dump($list);exit;
+
         // TODO: Implement listContents() method.
     }
 
@@ -286,25 +312,70 @@ class StorageAdapter implements StorageAdapterInterface
         // TODO: Implement createTempFile() method.
     }
 
+    /**
+     *
+     */
     private function initialize()
     {
         if (! $this->initalized) {
-            var_dump($this->configData);exit;
-            //            $client = new \Google_Client();
-            //            $client->setClientId('[app client id].apps.googleusercontent.com');
-            //            $client->setClientSecret('[app client secret]');
-            //            $client->refreshToken('[your refresh token]');
-            //
-            //            $service = new \Google_Service_Drive($client);
-            //
-            //            $adapter = new \Hypweb\Flysystem\GoogleDrive\GoogleDriveAdapter($service, '['root' or folder ID]');
-            ///* Recommended cached adapter use */
-            //// $adapter = new \League\Flysystem\Cached\CachedAdapter(
-            ////     new \Hypweb\Flysystem\GoogleDrive\GoogleDriveAdapter($service, '['root' or folder ID]'),
-            ////     new \League\Flysystem\Cached\Storage\Memory()
-            //// );
-            //
-            //$filesystem = new \League\Flysystem\Filesystem($adapter);
+            $this->createGoogleClient();
+            $this->createGoogleServiceDrive();
+            $this->createGoogleDriveAdapter();
+            $this->createStorage();
+
+            $this->initalized = true;
         }
+    }
+
+    /**
+     * @return \Google_Client
+     */
+    private function createGoogleClient()
+    {
+        if (empty($this->googleClient)) {
+            $this->googleClient = new \Google_Client();
+            $this->googleClient->setClientId($this->configData->getClientId());
+            $this->googleClient->setClientSecret($this->configData->getClientSecret());
+            $this->googleClient->refreshToken($this->configData->getRefreshToken());
+        }
+        try {
+            var_dump($this->googleClient);
+            exit;
+        } catch (\Exception $e) {
+            var_dump($e);exit;
+        }
+        return $this->googleClient;
+    }
+
+    /**
+     * @return \Google_Service_Drive
+     */
+    private function createGoogleServiceDrive()
+    {
+        return $this->googleServiceDrive = new \Google_Service_Drive($this->googleClient);
+    }
+
+    /**
+     * @return GoogleDriveAdapter
+     */
+    private function createGoogleDriveAdapter()
+    {
+        //// $adapter = new \League\Flysystem\Cached\CachedAdapter(
+        ////     new \Hypweb\Flysystem\GoogleDrive\GoogleDriveAdapter($service, '['root' or folder ID]'),
+        ////     new \League\Flysystem\Cached\Storage\Memory()
+        //// );
+
+        return $this->googleDriveAdapter = new GoogleDriveAdapter(
+            $this->googleServiceDrive,
+            $this->configData->getRoot()
+        );
+    }
+
+    /**
+     *
+     */
+    private function createStorage()
+    {
+        $this->storage = new Filesystem($this->googleDriveAdapter);
     }
 }

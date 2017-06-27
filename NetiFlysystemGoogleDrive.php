@@ -6,6 +6,9 @@
  */
 
 namespace NetiFlysystemGoogleDrive;
+if(is_file(__DIR__. '/vendor/autoload.php')) {
+    require __DIR__ . '/vendor/autoload.php';
+}
 
 use Shopware\Components\Plugin;
 use Shopware\Components\Plugin\Context\ActivateContext;
@@ -20,19 +23,6 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  */
 class NetiFlysystemGoogleDrive extends Plugin
 {
-    /**
-     * @param ContainerBuilder $container
-     */
-    public function build(ContainerBuilder $container)
-    {
-        $pathToComposerAutoloader = $this->getComposerAutoloader();
-        parent::build($container);
-
-        if (is_file($pathToComposerAutoloader)) {
-            require $pathToComposerAutoloader;
-        }
-    }
-
     /**
      * @param InstallContext $context
      *
