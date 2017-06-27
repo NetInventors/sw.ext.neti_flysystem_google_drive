@@ -1,0 +1,21 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <!-- Synthetics -->
+        <service id="modules" class="Shopware_Components_Modules" synthetic="true"/>
+        <service id="system" class="sSystem" synthetic="true"/>
+
+
+        <service class="NetiFlysystemGoogleDrive\Service\ImportExport\StorageAdapter"
+                 id="neti_flysystem_google_drive.service.import_export.storage_adapter">
+            <argument id="snippets" type="service"/>
+            <argument id="neti_import_export.service.storage_adapter_helper" type="service"/>
+            <tag name="neti_import_export.storage_adapter"/>
+        </service>
+
+    </services>
+</container>
