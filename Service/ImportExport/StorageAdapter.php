@@ -278,8 +278,13 @@ class StorageAdapter implements StorageAdapterInterface
     {
         $this->initialize();
         //var_dump('initialize');exit;
-        //$list = $this->storage->listContents($directory, $recursive);
-        //var_dump($list);exit;
+        try {
+            $list = $this->storage->listContents($directory, $recursive);
+            var_dump($list);
+            exit;
+        } catch (\Exception $e) {
+            var_dump($e);exit;
+        }
 
         // TODO: Implement listContents() method.
     }
@@ -321,6 +326,7 @@ class StorageAdapter implements StorageAdapterInterface
             $this->createGoogleClient();
             $this->createGoogleServiceDrive();
             $this->createGoogleDriveAdapter();
+
             $this->createStorage();
 
             $this->initalized = true;
@@ -333,17 +339,22 @@ class StorageAdapter implements StorageAdapterInterface
     private function createGoogleClient()
     {
         if (empty($this->googleClient)) {
+            /**
+             * https://accounts.google.com/o/oauth2/v2/auth?scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fdrive.appdata&access_type=offline&include_granted_scopes=true&state=state_parameter_passthrough_value&redirect_uri=http%3A%2F%2Fshopware-5214.de%2Fcallback&response_type=code&client_id=71137613328-b8trbhhdofvmutt8b1aho2cbsdhc7mm6.apps.googleusercontent.com
+             */
             $this->googleClient = new \Google_Client();
-            $this->googleClient->setClientId($this->configData->getClientId());
-            $this->googleClient->setClientSecret($this->configData->getClientSecret());
-            $this->googleClient->refreshToken($this->configData->getRefreshToken());
+            $this->googleClient->setDeveloperKey('AIzaSyDvJB4-BYsofsFtJ7M2GcQw2CKRC_IXDb0');
+            //$this->googleClient->setClientId($this->configData->getClientId());
+            //$this->googleClient->setClientSecret($this->configData->getClientSecret());
+            //$this->googleClient->refreshToken($this->configData->getRefreshToken());
+            //$this->googleClient->setAccessType('offline');
         }
-        try {
-            var_dump($this->googleClient);
-            exit;
-        } catch (\Exception $e) {
-            var_dump($e);exit;
-        }
+        //try {
+        //    var_dump($this->googleClient);
+        //    exit;
+        //} catch (\Exception $e) {
+        //    var_dump($e);exit;
+        //}
         return $this->googleClient;
     }
 
