@@ -16,4 +16,8 @@
         <changes lang="en"><![CDATA[
 ]]></changes>
     </changelog>
+
+    <requiredPlugins>
+        <requiredPlugin pluginName="NetiFoundation" minVersion="2.1.9"/>
+    </requiredPlugins>
 </plugin>

@@ -7,12 +7,14 @@
 
 namespace NetiFlysystemGoogleDrive\Service\ImportExport;
 
+use Hypweb\Flysystem\GoogleDrive\GoogleDriveAdapter;
 use NetiImportExport\Models\Profiles;
 use NetiImportExport\Models\Storage;
 use NetiImportExport\Service\Collections\CollectionInterface;
 use NetiImportExport\Service\Collections\FileHandlerInterface;
 use NetiImportExport\Service\Collections\StorageAdapterInterface;
 use NetiImportExport\Service\StorageAdapterHelperInterface;
+use NetiImportExport\Service\Collections\DataHandlerInterface;
 
 /**
  * Class StorageAdapter
@@ -32,6 +34,16 @@ class StorageAdapter implements StorageAdapterInterface
     protected $storageAdapterHelper;
 
     /**
+     * @var array
+     */
+    protected $configData;
+
+    /**
+     * @var bool
+     */
+    protected $initalized = false;
+
+    /**
      * StorageAdapter constructor.
      *
      * @param \Enlight_Components_Snippet_Manager $snippets
@@ -45,24 +57,48 @@ class StorageAdapter implements StorageAdapterInterface
         $this->storageAdapterHelper = $storageAdapterHelper;
     }
 
+    /**
+     * @return mixed
+     */
     public function getName()
     {
-        // TODO: Implement getName() method.
+        return $this->snippets->getNamespace('plugins/neti_flysystem_google_drive/backend/import_export/storage_adapter')->get('name', 'Google Drive');
     }
 
+    /**
+     * @param mixed $key
+     *
+     * @return bool
+     */
     public function supports($key)
     {
-        // TODO: Implement supports() method.
+        return in_array($key, $this->getSupportedTypes());
     }
 
+    /**
+     * @return array
+     */
     public function getSupportedTypes()
     {
-        // TODO: Implement getSupportedTypes() method.
+        return array(
+            StorageAdapterInterface::SUPPORTED_TYPE_BACKEND,
+            StorageAdapterInterface::SUPPORTED_TYPE_CLI,
+            DataHandlerInterface::SUPPORTED_TYPE_IMPORT,
+            DataHandlerInterface::SUPPORTED_TYPE_EXPORT,
+            DataHandlerInterface::SUPPORTED_TYPE_EVENT,
+        );
     }
 
+    /**
+     * @param array $configData
+     *
+     * @return $this
+     */
     public function setConfigData(array $configData)
     {
-        // TODO: Implement setConfigData() method.
+        $this->configData = $configData;
+
+        return $this;
     }
 
     public function current()
@@ -90,14 +126,50 @@ class StorageAdapter implements StorageAdapterInterface
         // TODO: Implement rewind() method.
     }
 
+    /**
+     * @return array
+     */
     public function getViewData()
     {
-        // TODO: Implement getViewData() method.
+        $snippetNamespace = $this->snippets->getNamespace('plugins/neti_flysystem_google_drive/backend/import_export/storage_adapter');
+
+        return array(
+            array(
+                'fieldLabel' => $snippetNamespace->get('field_label_client_id', 'Client id'),
+                'name'       => 'clientId',
+                'xtype'      => 'textfield'
+            ),
+            array(
+                'fieldLabel' => $snippetNamespace->get('field_label_client_secret', 'Client secret'),
+                'name'       => 'clientSecret',
+                'xtype'      => 'textfield'
+            ),
+            array(
+                'fieldLabel' => $snippetNamespace->get('field_label_refresh_token', 'Refresh token'),
+                'name'       => 'refreshToken',
+                'xtype'      => 'textfield'
+            ),
+            array(
+                'fieldLabel' => $snippetNamespace->get('field_label_root_dir', 'Root dir'),
+                'name'       => 'rootDir',
+                'value'      => 'root',
+                'xtype'      => 'textfield'
+            )
+        );
     }
 
+    /**
+     * @param null $key
+     *
+     * @return string
+     */
     public function getDataModel($key = null)
     {
-        // TODO: Implement getDataModel() method.
+        switch ($key) {
+            case 'view':
+                return \NetiFlysystemGoogleDrive\Models\ImportExport\StorageAdapter::class;
+                break;
+        }
     }
 
     public function getSelectionViewData()
@@ -105,11 +177,22 @@ class StorageAdapter implements StorageAdapterInterface
         // TODO: Implement getSelectionViewData() method.
     }
 
+    /**
+     * @param array $item
+     */
     public function onListItemResult(array &$item)
     {
-        // TODO: Implement onListItemResult() method.
+        $item['storageAdapterViewData']          = $this->getViewData();
+        $item['storageAdapterSelectionViewData'] = $this->getSelectionViewData();
     }
 
+    /**
+     * @param \Enlight_Controller_Request_Request $request
+     * @param Storage                             $storageModel
+     * @param Profiles                            $profileModel
+     *
+     * @return array|null|void
+     */
     public function onUploadFile(
         \Enlight_Controller_Request_Request $request,
         Storage $storageModel,
@@ -118,6 +201,13 @@ class StorageAdapter implements StorageAdapterInterface
         // TODO: Implement onUploadFile() method.
     }
 
+    /**
+     * @param \Enlight_Controller_Request_Request $request
+     * @param Storage                             $storageModel
+     * @param Profiles                            $profileModel
+     *
+     * @return array|null|void
+     */
     public function onRemoveUploadedFile(
         \Enlight_Controller_Request_Request $request,
         Storage $storageModel,
@@ -163,6 +253,8 @@ class StorageAdapter implements StorageAdapterInterface
 
     public function listContents($directory = '', $recursive = false)
     {
+        $this->initialize();
+        GoogleDriveAdapter::class;
         // TODO: Implement listContents() method.
     }
 
@@ -181,13 +273,38 @@ class StorageAdapter implements StorageAdapterInterface
         // TODO: Implement getPathPrefix() method.
     }
 
+    /**
+     * @return FileHandlerInterface[]|null
+     */
     public function getFileHandlers()
     {
-        // TODO: Implement getFileHandlers() method.
+        return array();
     }
 
     public function createTempFile($path)
     {
         // TODO: Implement createTempFile() method.
+    }
+
+    private function initialize()
+    {
+        if (! $this->initalized) {
+            var_dump($this->configData);exit;
+            //            $client = new \Google_Client();
+            //            $client->setClientId('[app client id].apps.googleusercontent.com');
+            //            $client->setClientSecret('[app client secret]');
+            //            $client->refreshToken('[your refresh token]');
+            //
+            //            $service = new \Google_Service_Drive($client);
+            //
+            //            $adapter = new \Hypweb\Flysystem\GoogleDrive\GoogleDriveAdapter($service, '['root' or folder ID]');
+            ///* Recommended cached adapter use */
+            //// $adapter = new \League\Flysystem\Cached\CachedAdapter(
+            ////     new \Hypweb\Flysystem\GoogleDrive\GoogleDriveAdapter($service, '['root' or folder ID]'),
+            ////     new \League\Flysystem\Cached\Storage\Memory()
+            //// );
+            //
+            //$filesystem = new \League\Flysystem\Filesystem($adapter);
+        }
     }
 }
