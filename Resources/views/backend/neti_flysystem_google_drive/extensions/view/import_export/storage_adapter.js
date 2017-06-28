@@ -136,8 +136,11 @@ Ext.define('Shopware.apps.NetiFlysystemGoogleDriveExtensions.view.importExport.S
                     }
                 },
                 '_is_popup_blocked': function (scope, popup_window) {
-                    if ((popup_window.innerHeight > 0) == false) {
-                        scope._displayError();
+                    try {
+                        if ((popup_window.innerHeight > 0) == false) {
+                            scope._displayError();
+                        }
+                    } catch (err) {
                     }
                 },
                 '_displayError': function () {
@@ -171,11 +174,11 @@ Ext.define('Shopware.apps.NetiFlysystemGoogleDriveExtensions.view.importExport.S
                             content = Popup.document.documentElement.innerText;
                             jsonContent = Ext.decode(content);
 
-                            if(jsonContent.hasOwnProperty('access_token')) {
+                            if (jsonContent.hasOwnProperty('access_token')) {
                                 accessTokenField.setValue(jsonContent.access_token);
                             }
 
-                            if(jsonContent.hasOwnProperty('refresh_token')) {
+                            if (jsonContent.hasOwnProperty('refresh_token')) {
                                 refreshTokenField.setValue(jsonContent.refresh_token);
                             }
 
