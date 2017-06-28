@@ -221,57 +221,108 @@ class StorageAdapter implements StorageAdapterInterface
 
     public function getMimeType($path)
     {
-        // TODO: Implement getMimeType() method.
+        $this->initialize();
+
+        return $this->storage->getMimetype($path);
     }
 
+    /**
+     * @param string $path
+     *
+     * @return string|void
+     */
     public function getEncoding($path)
     {
-        // TODO: Implement getEncoding() method.
+        //$this->initialize();
+
+        //return $this->storageAdapterHelper->getEncoding($location);
     }
 
+    /**
+     * @param string $path
+     *
+     * @return bool|false|resource
+     */
     public function readStream($path)
     {
-        // TODO: Implement readStream() method.
+        $this->initialize();
+
+        return $this->storage->readStream($path);
     }
 
+    /**
+     * @param string $path
+     *
+     * @return bool
+     */
     public function delete($path)
     {
-        // TODO: Implement delete() method.
+        $this->initialize();
+
+        return $this->storage->delete($path);
     }
 
+    /**
+     * @param string $path
+     *
+     * @return bool|false|int
+     */
     public function getSize($path)
     {
-        // TODO: Implement getSize() method.
+        $this->initialize();
+
+        return $this->storage->getSize($path);
     }
 
+    /**
+     * @param string $path
+     * @param string $newpath
+     *
+     * @return bool
+     */
     public function rename($path, $newpath)
     {
-        // TODO: Implement rename() method.
+        $this->initialize();
+
+        return $this->storage->rename($path, $newpath);
     }
 
+    /**
+     * @param string $path
+     * @param string $newpath
+     *
+     * @return bool
+     */
     public function copy($path, $newpath)
     {
-        // TODO: Implement copy() method.
+        $this->initialize();
+
+        return $this->storage->copy($path, $newpath);
     }
 
+    /**
+     * @param string $directory
+     * @param bool   $recursive
+     *
+     * @return array
+     */
     public function listContents($directory = '', $recursive = false)
     {
         $this->initialize();
-        //var_dump('initialize');exit;
-        try {
-            $list = $this->storage->listContents($directory, $recursive);
-            var_dump($list);
-            exit;
-        } catch (\Exception $e) {
-            var_dump($e);
-            exit;
-        }
-        // TODO: Implement listContents() method.
+
+        return $this->storage->listContents($directory, $recursive);
     }
 
+    /**
+     * @param string $path
+     *
+     * @return bool
+     */
     public function has($path)
     {
-        // TODO: Implement has() method.
+        $this->initialize();
+
+        return $this->storage->has($path);
     }
 
     public function applyPathPrefix($path)
