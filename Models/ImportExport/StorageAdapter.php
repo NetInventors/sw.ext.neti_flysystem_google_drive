@@ -51,6 +51,20 @@ class StorageAdapter extends ModelEntity
     protected $refreshToken;
 
     /**
+     * @ORM\Column(type="string")
+     *
+     * @var string
+     */
+    protected $developerKey;
+
+    /**
+     * @ORM\Column(type="boolean")
+     *
+     * @var boolean
+     */
+    protected $development;
+
+    /**
      * @Assert\NotBlank
      * @ORM\Column(type="string")
      *
@@ -174,6 +188,54 @@ class StorageAdapter extends ModelEntity
     public function setRootDir($rootDir)
     {
         $this->rootDir = $rootDir;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of developerKey from the record
+     *
+     * @return string
+     */
+    public function getDeveloperKey()
+    {
+        return $this->developerKey;
+    }
+
+    /**
+     * Sets the Value to developerKey in the record
+     *
+     * @param string $developerKey
+     *
+     * @return self
+     */
+    public function setDeveloperKey($developerKey)
+    {
+        $this->developerKey = $developerKey;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of development from the record
+     *
+     * @return bool
+     */
+    public function getDevelopment()
+    {
+        return $this->development;
+    }
+
+    /**
+     * Sets the Value to development in the record
+     *
+     * @param bool $development
+     *
+     * @return self
+     */
+    public function setDevelopment($development)
+    {
+        $this->development = $development;
 
         return $this;
     }

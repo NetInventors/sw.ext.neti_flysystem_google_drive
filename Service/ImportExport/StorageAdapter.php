@@ -177,6 +177,18 @@ class StorageAdapter implements StorageAdapterInterface
                 'name'       => 'rootDir',
                 'value'      => 'root',
                 'xtype'      => 'textfield'
+            ),
+            array(
+                'fieldLabel'     => $snippetNamespace->get('field_label_development', 'Development'),
+                'name'           => 'development',
+                'xtype'          => 'checkbox',
+                'uncheckedValue' => 0,
+                'inputValue'     => 1
+            ),
+            array(
+                'fieldLabel' => $snippetNamespace->get('field_label_developer_key', 'Developer key'),
+                'name'       => 'developerKey',
+                'xtype'      => 'textfield'
             )
         );
     }
@@ -283,9 +295,9 @@ class StorageAdapter implements StorageAdapterInterface
             var_dump($list);
             exit;
         } catch (\Exception $e) {
-            var_dump($e);exit;
+            var_dump($e);
+            exit;
         }
-
         // TODO: Implement listContents() method.
     }
 
@@ -343,18 +355,15 @@ class StorageAdapter implements StorageAdapterInterface
              * https://accounts.google.com/o/oauth2/v2/auth?scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fdrive.appdata&access_type=offline&include_granted_scopes=true&state=state_parameter_passthrough_value&redirect_uri=http%3A%2F%2Fshopware-5214.de%2Fcallback&response_type=code&client_id=71137613328-b8trbhhdofvmutt8b1aho2cbsdhc7mm6.apps.googleusercontent.com
              */
             $this->googleClient = new \Google_Client();
-            $this->googleClient->setDeveloperKey('AIzaSyDvJB4-BYsofsFtJ7M2GcQw2CKRC_IXDb0');
-            //$this->googleClient->setClientId($this->configData->getClientId());
-            //$this->googleClient->setClientSecret($this->configData->getClientSecret());
-            //$this->googleClient->refreshToken($this->configData->getRefreshToken());
-            //$this->googleClient->setAccessType('offline');
+            if ($this->configData->isDevelopment()) {
+                $this->googleClient->setDeveloperKey($this->configData->getDeveloperKey());
+            } else {
+                $this->googleClient->setClientId($this->configData->getClientId());
+                $this->googleClient->setClientSecret($this->configData->getClientSecret());
+                $this->googleClient->refreshToken($this->configData->getRefreshToken());
+            }
         }
-        //try {
-        //    var_dump($this->googleClient);
-        //    exit;
-        //} catch (\Exception $e) {
-        //    var_dump($e);exit;
-        //}
+
         return $this->googleClient;
     }
 

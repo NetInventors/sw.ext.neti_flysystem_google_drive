@@ -37,6 +37,16 @@ class AdapterConfig extends AbstractClass
     protected $root = 'root';
 
     /**
+     * @var string
+     */
+    protected $developerKey;
+
+    /**
+     * @var bool
+     */
+    protected $development = false;
+
+    /**
      * Gets the value of clientId from the record
      *
      * @return string
@@ -74,5 +84,39 @@ class AdapterConfig extends AbstractClass
     public function getRoot()
     {
         return $this->root;
+    }
+
+    /**
+     * Gets the value of developerKey from the record
+     *
+     * @return string
+     */
+    public function getDeveloperKey()
+    {
+        return $this->developerKey;
+    }
+
+    /**
+     * Gets the value of development from the record
+     *
+     * @return bool
+     */
+    public function isDevelopment()
+    {
+        return $this->development;
+    }
+
+    /**
+     * Sets the Value to development in the record
+     *
+     * @param bool $development
+     *
+     * @return self
+     */
+    public function setDevelopment($development)
+    {
+        $this->development = $development;
+
+        return $this;
     }
 }
