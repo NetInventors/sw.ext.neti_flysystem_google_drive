@@ -17,5 +17,11 @@
             <tag name="neti_import_export.storage_adapter"/>
         </service>
 
+        <service class="NetiFlysystemGoogleDrive\Subscriber\Backend"
+                 id="neti_flysystem_google_drive.subscriber.backend">
+            <argument type="string">%neti_flysystem_google_drive.plugin_dir%</argument>
+            <tag name="shopware.event_subscriber"/>
+        </service>
+
     </services>
 </container>

@@ -34,6 +34,11 @@ class AdapterConfig extends AbstractClass
     /**
      * @var string
      */
+    protected $accessToken;
+
+    /**
+     * @var string
+     */
     protected $root = 'root';
 
     /**
@@ -118,5 +123,15 @@ class AdapterConfig extends AbstractClass
         $this->development = $development;
 
         return $this;
+    }
+
+    /**
+     * Gets the value of accessToken from the record
+     *
+     * @return string
+     */
+    public function getAccessToken()
+    {
+        return $this->accessToken;
     }
 }

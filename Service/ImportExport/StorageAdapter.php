@@ -154,42 +154,10 @@ class StorageAdapter implements StorageAdapterInterface
      */
     public function getViewData()
     {
-        $snippetNamespace = $this->snippets->getNamespace('plugins/neti_flysystem_google_drive/backend/import_export/storage_adapter');
-
         return array(
             array(
-                'fieldLabel' => $snippetNamespace->get('field_label_client_id', 'Client id'),
-                'name'       => 'clientId',
-                'xtype'      => 'textfield'
+                'xtype' => 'neti_flysystem_google_drive_import_export_storage_adapter'
             ),
-            array(
-                'fieldLabel' => $snippetNamespace->get('field_label_client_secret', 'Client secret'),
-                'name'       => 'clientSecret',
-                'xtype'      => 'textfield'
-            ),
-            array(
-                'fieldLabel' => $snippetNamespace->get('field_label_refresh_token', 'Refresh token'),
-                'name'       => 'refreshToken',
-                'xtype'      => 'textfield'
-            ),
-            array(
-                'fieldLabel' => $snippetNamespace->get('field_label_root_dir', 'Root dir'),
-                'name'       => 'rootDir',
-                'value'      => 'root',
-                'xtype'      => 'textfield'
-            ),
-            array(
-                'fieldLabel'     => $snippetNamespace->get('field_label_development', 'Development'),
-                'name'           => 'development',
-                'xtype'          => 'checkbox',
-                'uncheckedValue' => 0,
-                'inputValue'     => 1
-            ),
-            array(
-                'fieldLabel' => $snippetNamespace->get('field_label_developer_key', 'Developer key'),
-                'name'       => 'developerKey',
-                'xtype'      => 'textfield'
-            )
         );
     }
 
@@ -361,6 +329,8 @@ class StorageAdapter implements StorageAdapterInterface
                 $this->googleClient->setClientId($this->configData->getClientId());
                 $this->googleClient->setClientSecret($this->configData->getClientSecret());
                 $this->googleClient->refreshToken($this->configData->getRefreshToken());
+                $this->googleClient->setAccessToken($this->configData->getAccessToken());
+                //$this->googleClient->fetchAccessTokenWithAuthCode($this->configData->getRefreshToken());
             }
         }
 

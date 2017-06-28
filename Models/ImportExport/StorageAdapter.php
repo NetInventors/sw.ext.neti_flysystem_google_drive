@@ -51,6 +51,14 @@ class StorageAdapter extends ModelEntity
     protected $refreshToken;
 
     /**
+     * @Assert\NotBlank
+     * @ORM\Column(type="string")
+     *
+     * @var string
+     */
+    protected $accessToken;
+
+    /**
      * @ORM\Column(type="string")
      *
      * @var string
@@ -236,6 +244,30 @@ class StorageAdapter extends ModelEntity
     public function setDevelopment($development)
     {
         $this->development = $development;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of accessToken from the record
+     *
+     * @return string
+     */
+    public function getAccessToken()
+    {
+        return $this->accessToken;
+    }
+
+    /**
+     * Sets the Value to accessToken in the record
+     *
+     * @param string $accessToken
+     *
+     * @return self
+     */
+    public function setAccessToken($accessToken)
+    {
+        $this->accessToken = $accessToken;
 
         return $this;
     }
