@@ -175,9 +175,20 @@ class StorageAdapter implements StorageAdapterInterface
         }
     }
 
+    /**
+     *
+     */
     public function getSelectionViewData()
     {
         // TODO: Implement getSelectionViewData() method.
+    }
+
+    /**
+     *
+     */
+    public function getDownloadViewData()
+    {
+        // TODO: Implement getDownloadViewData() method.
     }
 
     /**
