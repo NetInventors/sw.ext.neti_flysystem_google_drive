@@ -84,7 +84,7 @@ Ext.define('Shopware.apps.NetiFlysystemGoogleDriveExtensions.view.importExport.S
                     'name': 'refreshToken',
                     'xtype': 'textfield',
                     'flex': 1,
-                    'allowBlank': false
+                    'allowBlank': true
                 },
                 {
                     'xtype': 'button',
