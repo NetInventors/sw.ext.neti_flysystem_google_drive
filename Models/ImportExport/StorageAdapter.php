@@ -43,7 +43,6 @@ class StorageAdapter extends ModelEntity
     protected $clientSecret;
 
     /**
-     * @Assert\NotBlank
      * @ORM\Column(type="string")
      *
      * @var string
