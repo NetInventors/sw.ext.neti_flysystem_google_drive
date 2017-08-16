@@ -415,4 +415,12 @@ class StorageAdapter implements StorageAdapterInterface
     {
         $this->storage = new Filesystem($this->googleDriveAdapter);
     }
+
+    /**
+     * @return array|null
+     */
+    public function getDownloadViewData()
+    {
+        // TODO: Implement getDownloadViewData() method.
+    }
 }
