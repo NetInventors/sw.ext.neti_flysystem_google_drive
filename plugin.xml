@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <plugin xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/shopware/shopware/5.2/engine/Shopware/Components/Plugin/schema/plugin.xsd">
+<plugin xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../engine/Shopware/Components/Plugin/schema/plugin.xsd">
 
     <label lang="de">Neti Flysystem GoogleDrive</label>
     <label lang="en">Neti Flysystem GoogleDrive</label>
 
     <version>1.0.0</version>
-    <link>http://www.shopinventors.de</link>
+    <link>http://www.netinventors.de</link>
     <author>Net Inventors GmbH</author>
     <compatibility minVersion="5.2.6" />
 
     <changelog version="1.0.0">
         <changes lang="de"><![CDATA[
+[#26679] Entwicklung des Plugins
 ]]></changes>
         <changes lang="en"><![CDATA[
+[#26679] Plugin Development
 ]]></changes>
     </changelog>
 
