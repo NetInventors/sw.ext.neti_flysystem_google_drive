@@ -39,7 +39,7 @@ class AdapterConfig extends AbstractClass
     /**
      * @var string
      */
-    protected $root = 'root';
+    protected $rootDir = 'root';
 
     /**
      * @var string
@@ -82,13 +82,13 @@ class AdapterConfig extends AbstractClass
     }
 
     /**
-     * Gets the value of root from the record
+     * Gets the value of rootDir from the record
      *
      * @return string
      */
-    public function getRoot()
+    public function getRootDir()
     {
-        return $this->root;
+        return $this->rootDir;
     }
 
     /**

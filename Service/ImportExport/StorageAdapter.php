@@ -287,6 +287,18 @@ class StorageAdapter implements StorageAdapterInterface
 
     /**
      * @param string $path
+     *
+     * @return array|false
+     */
+    public function getMetadata($path)
+    {
+        $this->initialize();
+
+        return $this->storage->getMetadata($path);
+    }
+
+    /**
+     * @param string $path
      * @param string $newpath
      *
      * @return bool
@@ -412,10 +424,9 @@ class StorageAdapter implements StorageAdapterInterface
         ////     new \Hypweb\Flysystem\GoogleDrive\GoogleDriveAdapter($service, '['root' or folder ID]'),
         ////     new \League\Flysystem\Cached\Storage\Memory()
         //// );
-
         return $this->googleDriveAdapter = new GoogleDriveAdapter(
             $this->googleServiceDrive,
-            $this->configData->getRoot()
+            $this->configData->getRootDir()
         );
     }
 
