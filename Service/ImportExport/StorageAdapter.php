@@ -437,4 +437,31 @@ class StorageAdapter implements StorageAdapterInterface
     {
         $this->storage = new Filesystem($this->googleDriveAdapter);
     }
+
+    /**
+     * @param string $path
+     * @param string $content
+     *
+     * @return bool
+     * @throws \League\Flysystem\FileExistsException
+     */
+    public function write($path, $content)
+    {
+        $this->initialize();
+
+        return $this->storage->write($path, $content);
+    }
+
+    /**
+     * @param string $path
+     * @param string $content
+     *
+     * @return bool
+     */
+    public function put($path, $content)
+    {
+        $this->initialize();
+
+        return $this->storage->put($path, $content);
+    }
 }
