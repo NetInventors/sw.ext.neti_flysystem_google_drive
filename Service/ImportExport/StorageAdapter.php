@@ -44,7 +44,7 @@ class StorageAdapter implements StorageAdapterInterface
     /**
      * @var bool
      */
-    protected $initalized = false;
+    protected $initialized = false;
 
     /**
      * @var \Google_Client
@@ -376,14 +376,14 @@ class StorageAdapter implements StorageAdapterInterface
      */
     private function initialize()
     {
-        if (! $this->initalized) {
+        if (! $this->initialized) {
             $this->createGoogleClient();
             $this->createGoogleServiceDrive();
             $this->createGoogleDriveAdapter();
 
             $this->createStorage();
 
-            $this->initalized = true;
+            $this->initialized = true;
         }
     }
 
