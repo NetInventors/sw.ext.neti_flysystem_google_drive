@@ -464,4 +464,17 @@ class StorageAdapter implements StorageAdapterInterface
 
         return $this->storage->put($path, $content);
     }
+
+    /**
+     * @param string $path
+     *
+     * @return bool|false|string
+     */
+    public function read($path)
+    {
+        $this->initialize();
+
+        return $this->storage->read($path);
+    }
+
 }
